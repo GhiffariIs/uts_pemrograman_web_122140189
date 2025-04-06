@@ -1,12 +1,13 @@
-# React + Vite
+# NotList App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NotList App merupakan aplikasi berbasis web yang dapat digunakan untuk membuat daftar atau To Do List sebagai alat keseharian user.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## use Redux Toolkit untuk Global State Management
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Pengelolaan State Terpusat: Redux Toolkit menyediakan penyimpanan state terpusat yang memudahkan pengelolaan data di seluruh aplikasi.
+- Prediktabilitas: Pola one-way data flow pada Redux membuat perubahan state lebih mudah diprediksi dan di-debug.
+- DevTools yang Canggih: Redux DevTools Extension memungkinkan penelusuran perubahan state dan time-travel debugging.
+- Pengurangan Boilerplate: Redux Toolkit mengurangi kode boilerplate dibandingkan Redux tradisional melalui fitur seperti createSlice.
+- Immutability: Redux Toolkit menggunakan Immer di balik layar, memudahkan penulisan logika yang mengubah state.
+- Skalabilitas: Cocok untuk aplikasi kompleks dengan banyak komponen yang membutuhkan akses ke data yang sama.

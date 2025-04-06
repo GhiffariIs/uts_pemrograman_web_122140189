@@ -13,7 +13,7 @@ const TodoDetailsPage = () => {
   const { darkMode } = useTheme();
   
   const { currentTodo, status, error } = useSelector(state => state.todos);
-  const { fetchTodoById, toggleTodoCompletion, removeTodo, editTodoTitle } = useTodoActions();
+  const { fetchTodoById, toggleTodoCompletion, removeTodo } = useTodoActions();
 
   useEffect(() => {
     // Fetch the todo if it's not already loaded or is a different one
