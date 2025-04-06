@@ -9,12 +9,13 @@ import CompletedTodosPage from './pages/CompletedTodosPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
+
   return (
     <Provider store={store}>
       <ThemeProvider>
         <Router>
           <div className="app">
-            <Navbar title="Todo List App" />
+            <Navbar title="NotList App"></Navbar> 
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/todo/:id" element={<TodoDetailsPage />} />

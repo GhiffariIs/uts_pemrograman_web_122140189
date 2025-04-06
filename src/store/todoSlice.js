@@ -1,6 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchTodos, fetchTodoById, createTodo, updateTodo, deleteTodo } from '../api/todoApi';
 
+// Fungsi untuk menyimpan state ke localStorage
+const saveToLocalStorage = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('todos', serializedState);
+  } catch (error) {
+    console.error('Gagal menyimpan ke localStorage:', error);
+  }
+};
+
+// Fungsi untuk mengambil state dari localStorage
+const loadFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('todos');
+    if (serializedState === null) return [];
+    return JSON.parse(serializedState);
+  } catch (error) {
+    console.error('Gagal mengambil dari localStorage:', error);
+    return [];
+  }
+};
+
 // Async thunks
 export const fetchTodosAsync = createAsyncThunk(
   'todos/fetchTodos',
@@ -61,15 +83,15 @@ export const deleteTodoAsync = createAsyncThunk(
 const todoSlice = createSlice({
   name: 'todos',
   initialState: {
-    items: [],
+    items: loadFromLocalStorage(), // Ambil data dari localStorage
     currentTodo: null,
     status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: null
+    error: null,
   },
   reducers: {
     clearCurrentTodo: (state) => {
       state.currentTodo = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -80,6 +102,7 @@ const todoSlice = createSlice({
       .addCase(fetchTodosAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.items = action.payload;
+        saveToLocalStorage(state.items); // Simpan ke localStorage
       })
       .addCase(fetchTodosAsync.rejected, (state, action) => {
         state.status = 'failed';
@@ -106,6 +129,7 @@ const todoSlice = createSlice({
       .addCase(createTodoAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.items.push(action.payload);
+        saveToLocalStorage(state.items); // Simpan ke localStorage
       })
       .addCase(createTodoAsync.rejected, (state, action) => {
         state.status = 'failed';
@@ -125,6 +149,7 @@ const todoSlice = createSlice({
         if (state.currentTodo && state.currentTodo.id === action.payload.id) {
           state.currentTodo = action.payload;
         }
+        saveToLocalStorage(state.items); // Simpan ke localStorage
       })
       .addCase(updateTodoAsync.rejected, (state, action) => {
         state.status = 'failed';
@@ -141,12 +166,13 @@ const todoSlice = createSlice({
         if (state.currentTodo && state.currentTodo.id === action.payload) {
           state.currentTodo = null;
         }
+        saveToLocalStorage(state.items); // Simpan ke localStorage
       })
       .addCase(deleteTodoAsync.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
-  }
+  },
 });
 
 export const { clearCurrentTodo } = todoSlice.actions;
